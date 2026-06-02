@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4965111349783666494}
   - component: {fileID: -8792093080449362414}
   - component: {fileID: 936235733475433386}
+  - component: {fileID: -271400288663932246}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -166,3 +167,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-271400288663932246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3209085850561332624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54ceafe737dfbde44ab169d0d79212d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  jumpForce: 5.5
+  jumpTime: 1.5
+  player: {fileID: 0}
+  killDistance: 1.3

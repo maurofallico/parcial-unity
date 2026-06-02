@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Mauro\\Desktop\\parcial-unity\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\mauro\\desktop\\parcial-unity\\assets\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\mauro\\desktop\\parcial-unity\\assets\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\bullet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|c:\\users\\mauro\\desktop\\parcial-unity\\assets\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B4CD19DA-EE08-5225-FB19-1D0DFA4113DD}|Assembly-CSharp.csproj|solutionrelative:assets\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,29 +18,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Bullet.cs",
               "DocumentMoniker": "C:\\Users\\Mauro\\Desktop\\parcial-unity\\Assets\\Bullet.cs",
               "RelativeDocumentMoniker": "Assets\\Bullet.cs",
               "ToolTip": "C:\\Users\\Mauro\\Desktop\\parcial-unity\\Assets\\Bullet.cs",
               "RelativeToolTip": "Assets\\Bullet.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAQwCEAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T17:58:48.08Z"
+              "WhenOpened": "2026-05-29T17:58:48.08Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\Mauro\\Desktop\\parcial-unity\\Assets\\Player.cs",
               "RelativeDocumentMoniker": "Assets\\Player.cs",
               "ToolTip": "C:\\Users\\Mauro\\Desktop\\parcial-unity\\Assets\\Player.cs",
               "RelativeToolTip": "Assets\\Player.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAiwFEAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAUwFQAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-29T16:24:23.674Z",
               "EditorCaption": ""

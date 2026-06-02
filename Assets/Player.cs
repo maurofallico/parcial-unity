@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -43,6 +44,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         move = 0f;
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
