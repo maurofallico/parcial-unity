@@ -3,12 +3,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
     public float speed = 5f;
     public float jumpForce = 5.5f;
     public float shootCooldown = 0f;
+    public bool canJump = false;
+    public float move = 0f;
 
     Rigidbody2D rb;
     public GameObject bullet;
+
+    void Jump()
+    {
+        canJump = false;
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+    }
 
     void Shoot()
     {
@@ -33,21 +42,32 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shootCooldown += Time.deltaTime;
+        move = 0f;
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Translate(speed * Time.deltaTime * Vector3.left);
+            move = -1;
             transform.localScale = new Vector3(-1, 1, 1);
         }
+
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Translate(speed * Time.deltaTime * Vector3.right);
+            move = 1;
             transform.localScale = new Vector3(1, 1, 1);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        
+        rb.linearVelocity = new Vector2(
+            move * speed,
+            rb.linearVelocity.y
+        );
+
+        if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            Jump();
         }
+
+        shootCooldown += Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -58,4 +78,15 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // PISO NORMAL
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            canJump = true;
+        }
+
+    }
+
 }
