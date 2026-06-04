@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     public GameObject player;
     public float killDistance = 1.3f;
-    public GameObject bullet;
+    public GameObject bulletEnemy;
 
     public float jumpCooldown = 3f;
 
@@ -18,8 +18,14 @@ public class Enemy : MonoBehaviour
 
     int difficultySelected = Options.difficulty;
 
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+
+
     void Jump()
     {
+        anim.SetBool("isGrounded", false);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
 
@@ -27,7 +33,7 @@ public class Enemy : MonoBehaviour
     {
         if (shootDelay <= 0)
         {
-            Instantiate(bullet, transform.position + Vector3.right * -1, Quaternion.identity).GetComponent<Bullet>().direction = -1;
+            Instantiate(bulletEnemy, transform.position + Vector3.right * -1, Quaternion.identity).GetComponent<Bullet>().direction = -1;
             if (difficultySelected == 0)
             {
                 shootDelay = 0.5f;
@@ -48,6 +54,10 @@ public class Enemy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
+        anim = GetComponent<Animator>();
+
         if (difficultySelected == 0)
         {
             shootDelay = 0.5f;
@@ -66,6 +76,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(transform.position.y);
         jumpCooldown -= Time.deltaTime;
         shootDelay -= Time.deltaTime;
 
@@ -76,7 +87,7 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if (transform.position.y >= -0.4f)
+        if (transform.position.y >= 0.3f)
         {
             Shoot();
         }
@@ -91,6 +102,33 @@ public class Enemy : MonoBehaviour
             }
         }
         
+    }
+
+    public void FlashRed()
+    {
+        StartCoroutine(FlashCoroutine());
+    }
+
+    IEnumerator FlashCoroutine()
+    {
+        spriteRenderer.color = Color.red;
+
+        yield return new WaitForSeconds(0.05f);
+
+        spriteRenderer.color = originalColor;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // PISO NORMAL
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            anim.SetBool("isGrounded", true);
+        }
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            FlashRed();
+        }
     }
 
 

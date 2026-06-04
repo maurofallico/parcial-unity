@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -27,8 +29,12 @@ public class Player : MonoBehaviour
 
     public GameObject losePanel;
 
+    private Animator anim;
+
+
     void Jump()
     {
+        anim.SetBool("isGrounded", false);
         canJump = false;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
@@ -59,6 +65,7 @@ public class Player : MonoBehaviour
                 newHeart.GetComponent<Image>()
             );
         }
+        anim = GetComponent<Animator>();
     }
 
     public void TakeDamage(int damage)
@@ -122,19 +129,18 @@ public class Player : MonoBehaviour
         {
             if (shootCooldown >= 0.2f)
             {
+
                 Shoot();
+                anim.SetTrigger("Shoot");
                 shootCooldown = 0f;
             }
         }
 
         if (health == 0)
         {
-            UpdateHearts();
-            Destroy(gameObject);
-            health = -1;
-            losePanel.SetActive(true);
+            StartCoroutine(Die());
         }
-
+        anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -143,8 +149,26 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             canJump = true;
+            anim.SetBool("isGrounded", true);
         }
 
+    }
+
+    IEnumerator Die()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        UpdateHearts();
+
+        anim.SetTrigger("Death");
+
+        enabled = false;
+
+        yield return new WaitForSeconds(1f);
+
+        losePanel.SetActive(true);
+        Destroy(gameObject);
     }
 
 }
