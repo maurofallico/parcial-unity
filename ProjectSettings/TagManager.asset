@@ -9,6 +9,7 @@ TagManager:
   - Block
   - Enemy
   - Bullet
+  - EnemyHitBox
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Background
   - 
   - 
   - 

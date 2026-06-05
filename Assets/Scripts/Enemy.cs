@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     Rigidbody2D rb;
-    public float jumpForce = 5.5f;
+    public float jumpForce = 2.5f;
 
     public GameObject player;
     public float killDistance = 1.3f;
@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
 
     void Shoot()
     {
+
         if (shootDelay <= 0)
         {
             Instantiate(bulletEnemy, transform.position + Vector3.right * -1, Quaternion.identity).GetComponent<Bullet>().direction = -1;
@@ -76,7 +77,6 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(transform.position.y);
         jumpCooldown -= Time.deltaTime;
         shootDelay -= Time.deltaTime;
 
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
 
         }
 
-        if (transform.position.y >= 0.3f)
+        if (transform.position.y >= 0.2f)
         {
             Shoot();
         }
@@ -131,5 +131,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void Knockback()
+    {
+        transform.position +=
+            Vector3.right * 0.025f;
+    }
 
 }

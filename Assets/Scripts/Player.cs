@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
 
+    public float minX = -8.5f;
+
     public float speed = 5f;
     public float jumpForce = 5.5f;
     public float shootCooldown = 0f;
@@ -31,6 +33,7 @@ public class Player : MonoBehaviour
 
     private Animator anim;
 
+    int difficultySelected = Options.difficulty;
 
     void Jump()
     {
@@ -55,6 +58,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+
         rb = GetComponent<Rigidbody2D>();
         for (int i = 0; i < health; i++)
         {
@@ -66,6 +70,10 @@ public class Player : MonoBehaviour
             );
         }
         anim = GetComponent<Animator>();
+        if (difficultySelected == 2)
+        {
+            TakeDamage(1);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -140,12 +148,18 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(Die());
         }
+
         anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
+
+        Vector3 pos = transform.position;
+
+        pos.x = Mathf.Max(pos.x, minX);
+
+        transform.position = pos;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // PISO NORMAL
         if (collision.gameObject.CompareTag("Floor"))
         {
             canJump = true;

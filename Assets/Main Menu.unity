@@ -2008,7 +2008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d6d11e9286307458f7bf75ddc35a0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Options
-  difficulty: 1
   difficultyText: {fileID: 661121991}
 --- !u!1 &1530826425
 GameObject:
@@ -2206,8 +2205,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: HOPFIRE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fb00dc82247e74e41b999ada7217f954, type: 2}
+  m_sharedMaterial: {fileID: -7014530378430032904, guid: fb00dc82247e74e41b999ada7217f954, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2231,8 +2230,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3127,14 +3126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.27430224, b: 1, a: 1}
+  m_Color: {r: 0.93962264, g: 0.5600278, b: 0.2818867, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 6583625ea5813bb45b97f1ee3394cfbc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

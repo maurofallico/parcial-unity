@@ -29,13 +29,26 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Player>().TakeDamage(1);
+            Destroy(gameObject);
+        }
+
+    }
+
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("EnemyHitBox"))
+        {
+            Enemy enemy = other.GetComponentInParent<Enemy>();
+            enemy.Knockback();
+            enemy.FlashRed();
             Destroy(gameObject);
         }
     }
