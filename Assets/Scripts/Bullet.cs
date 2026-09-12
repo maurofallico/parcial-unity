@@ -1,29 +1,34 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 
 public class Bullet : MonoBehaviour
 {
-    Rigidbody2D rb;
-    public float speed = 8f;
-    public float bulletTime = 3f;
-    public float direction = 0f;
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float bulletTime = 3f;
+    [SerializeField] private int damage = 1;
 
-    TextMeshProUGUI healthText;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Rigidbody2D rb;
+
+    private float direction;
+
+    public float Direction
+    {
+        get => direction;
+        set => direction = value;
+    }
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-         bulletTime -= Time.deltaTime;
-         if (bulletTime <= 0)
-         {
-             Destroy(gameObject);
-         }
+        bulletTime -= Time.deltaTime;
+
+        if (bulletTime <= 0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
@@ -31,23 +36,20 @@ public class Bullet : MonoBehaviour
         rb.linearVelocity = Vector2.right * direction * speed;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Player"))
+        IDamageable damageable =
+            collision.gameObject.GetComponent<IDamageable>();
+
+        if (damageable != null)
+        {
+            damageable.TakeDamage(damage);
+        }
+
+        if (collision.gameObject.CompareTag("Floor") ||
+            damageable != null)
         {
             Destroy(gameObject);
         }
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<Player>().TakeDamage(1);
-            Destroy(gameObject);
-        }
-
-    }
-
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-    
     }
 }
