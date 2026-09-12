@@ -19,12 +19,16 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.linearVelocity = Vector2.right * direction * speed;
          bulletTime -= Time.deltaTime;
          if (bulletTime <= 0)
          {
              Destroy(gameObject);
          }
+    }
+
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = Vector2.right * direction * speed;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -44,12 +48,6 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("EnemyHitBox"))
-        {
-            Enemy enemy = other.GetComponentInParent<Enemy>();
-            enemy.Knockback();
-            enemy.FlashRed();
-            Destroy(gameObject);
-        }
+    
     }
 }

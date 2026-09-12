@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 {
 
     public float minX = -8.5f;
+    public float maxX = 8.5f;
 
     public float speed = 5f;
     public float jumpForce = 5.5f;
@@ -98,15 +99,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = new Vector2(
+            move * speed,
+            rb.linearVelocity.y
+        );
+    }
+
     // Update is called once per frame
     void Update()
     {
         move = 0f;
 
-        if (Input.GetKey(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -121,10 +126,7 @@ public class Player : MonoBehaviour
         }
 
         
-        rb.linearVelocity = new Vector2(
-            move * speed,
-            rb.linearVelocity.y
-        );
+        
 
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
@@ -151,11 +153,24 @@ public class Player : MonoBehaviour
 
         anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
 
-        Vector3 pos = transform.position;
+    }
 
-        pos.x = Mathf.Max(pos.x, minX);
-
-        transform.position = pos;
+    void LateUpdate()
+    {
+        if (transform.position.x < minX)
+        {
+            rb.position = new Vector2(
+                minX,
+                rb.position.y
+            );
+        }
+        if (transform.position.x > maxX)
+        {
+            rb.position = new Vector2(
+                maxX,
+                rb.position.y
+            );
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
