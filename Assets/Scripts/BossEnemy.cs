@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class MeleeEnemy : Enemy
+public class BossEnemy : Enemy
 {
-    [SerializeField] private float speed = 2f;
-
-    [SerializeField] private float attackCooldown = 1f;
-    [SerializeField] private int damage = 1;
+    [SerializeField] private float speed = 1.5f;
+    [SerializeField] private float attackCooldown = 0.8f;
+    [SerializeField] private int damage = 2;
 
     private float attackTimer;
 
@@ -28,7 +27,6 @@ public class MeleeEnemy : Enemy
             return;
 
         Attack();
-
         attackTimer = attackCooldown;
     }
 

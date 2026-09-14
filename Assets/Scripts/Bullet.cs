@@ -7,8 +7,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int damage = 1;
 
     private Rigidbody2D rb;
-
     private float direction;
+    private BulletPool pool;
 
     public float Direction
     {
@@ -16,9 +16,22 @@ public class Bullet : MonoBehaviour
         set => direction = value;
     }
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    public void SetPool(BulletPool bulletPool)
+    {
+        pool = bulletPool;
+    }
+
+    public void ResetBullet(float newDirection)
+    {
+        direction = newDirection;
+        bulletTime = 3f;
+
+        rb.linearVelocity = Vector2.zero;
     }
 
     private void Update()
@@ -27,7 +40,7 @@ public class Bullet : MonoBehaviour
 
         if (bulletTime <= 0f)
         {
-            Destroy(gameObject);
+            ReturnToPool();
         }
     }
 
@@ -49,7 +62,19 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor") ||
             damageable != null)
         {
-            Destroy(gameObject);
+            ReturnToPool();
+        }
+    }
+
+    private void ReturnToPool()
+    {
+        if (pool != null)
+        {
+            pool.ReturnBullet(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 }

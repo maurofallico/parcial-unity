@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8660731457720848731}
   - component: {fileID: 3760236682057515827}
   m_Layer: 0
-  m_Name: MeleeEnemy
+  m_Name: FastEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -3561858456799500357, guid: fc7353e803f05e24fb9593534e4fd506, type: 3}
-  m_Color: {r: 0.20914915, g: 0.3963102, b: 0.9433962, a: 1}
+  m_Color: {r: 0.31917474, g: 0.94509804, b: 0.20784312, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -181,10 +181,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemy
   hitFlashDuration: 0.1
-  maxHealth: 3
+  maxHealth: 4
   minX: -8.5
   maxX: 8.5
-  speed: 2
+  speed: 3
   attackCooldown: 1
   damage: 1
 --- !u!95 &3760236682057515827

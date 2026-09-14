@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamageable
@@ -22,7 +19,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private Sprite emptyHeart;
 
 
-    [SerializeField] private GameObject bullet;
+    [SerializeField] private BulletPool bulletPool;
     [SerializeField] private float shootCooldownTime = 0.2f;
 
 
@@ -36,10 +33,9 @@ public class Player : MonoBehaviour, IDamageable
     private int health;
     private float move;
     private float shootCooldown;
+
+    public bool IsGrounded => canJump;
     private bool canJump = false;
-
-
-    private int difficultySelected = Options.difficulty;
 
 
     private void Start()
@@ -48,7 +44,6 @@ public class Player : MonoBehaviour, IDamageable
         anim = GetComponent<Animator>(); 
         health = maxHealth; 
         CreateHearts();
-        ApplyDifficulty(); 
     }
 
     private void CreateHearts() 
@@ -58,13 +53,6 @@ public class Player : MonoBehaviour, IDamageable
             GameObject newHeart = Instantiate(heart, heartsContainer); 
             Image heartImage = newHeart.GetComponent<Image>(); 
             hearts.Add(heartImage); 
-        } 
-    }
-
-    private void ApplyDifficulty() 
-    { 
-        if (difficultySelected == 2) {
-            TakeDamage(1); 
         } 
     }
 
@@ -119,11 +107,23 @@ public class Player : MonoBehaviour, IDamageable
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); 
     }
 
-    private void Shoot() 
-    { 
-        float direction = transform.localScale.x; 
-        GameObject newBullet = Instantiate(bullet, transform.position + Vector3.right * direction, Quaternion.identity);
-        newBullet.GetComponent<Bullet>().Direction = direction;
+    private void Shoot()
+    {
+        float direction = transform.localScale.x;
+
+        GameObject newBullet = bulletPool.GetBullet();
+
+        if (newBullet == null)
+            return;
+
+        newBullet.transform.position =
+            transform.position + Vector3.right * direction;
+
+        newBullet.transform.rotation = Quaternion.identity;
+
+        Bullet bulletScript = newBullet.GetComponent<Bullet>();
+
+        bulletScript.ResetBullet(direction);
     }
 
     private void FixedUpdate()

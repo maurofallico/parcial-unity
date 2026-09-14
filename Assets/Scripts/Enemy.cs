@@ -1,14 +1,15 @@
 using UnityEngine;
 using System.Collections;
+using System;
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
-
+    public event Action<Enemy> OnEnemyDeath;
     [SerializeField] private float hitFlashDuration = 0.1f;
 
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
     private Coroutine hitFlashCoroutine;
-    [SerializeField] private int maxHealth = 1;
+    [SerializeField] protected int maxHealth = 1;
 
     [SerializeField] private float minX = -8.5f;
     [SerializeField] private float maxX = 8.5f;
@@ -20,6 +21,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     public int Health => health;
 
+
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,8 +29,44 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
 
-        health = maxHealth;
+        health = Mathf.RoundToInt(maxHealth * GetHealthMultiplier());
+
         player = GameObject.FindWithTag("Player");
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        ClampPosition();
+    }
+
+    protected float GetHealthMultiplier()
+    {
+        switch (Options.difficulty)
+        {
+            case 0:
+                return 0.8f;
+
+            case 2:
+                return 1.5f;
+
+            default:
+                return 1f;
+        }
+    }
+
+    protected float GetSpeedMultiplier()
+    {
+        switch (Options.difficulty)
+        {
+            case 0:
+                return 0.8f;
+
+            case 2:
+                return 1.3f;
+
+            default:
+                return 1f;
+        }
     }
 
 
@@ -67,6 +105,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     protected virtual void Die()
     {
+        OnEnemyDeath?.Invoke(this);
         Destroy(gameObject);
     }
 
@@ -95,6 +134,39 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             return;
     }
 
+    protected void FollowPlayer(float speed)
+    {
+        if (player == null)
+            return;
+
+        Player playerScript = player.GetComponent<Player>();
+
+        if (playerScript == null)
+            return;
+
+        float direction = Mathf.Sign(
+            player.transform.position.x - transform.position.x
+        );
+
+        if (!playerScript.IsGrounded)
+        {
+            direction = Mathf.Sign(rb.linearVelocity.x);
+        }
+
+        rb.linearVelocity = new Vector2(
+            direction * speed,
+            rb.linearVelocity.y
+        );
+
+        if (direction != 0)
+        {
+            Vector3 scale = transform.localScale;
+
+            scale.x = Mathf.Abs(scale.x) * direction;
+
+            transform.localScale = scale;
+        }
+    }
 
 
     public abstract void Attack();
